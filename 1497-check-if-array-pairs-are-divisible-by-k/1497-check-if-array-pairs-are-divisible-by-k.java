@@ -6,7 +6,7 @@ class Solution {
             int rem = arr[i]%k;
             if(rem<0)
             {
-                rem=(rem+k)%k;
+                rem=rem+k;
             }
             mod[rem]++;
         }
