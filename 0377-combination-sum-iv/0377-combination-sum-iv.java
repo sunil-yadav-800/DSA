@@ -17,10 +17,6 @@ class Solution {
         {
             return 1;
         }
-        if(idx == arr.length)
-        {
-            return 0;
-        }
         if(dp[idx][target] !=-1)
             return dp[idx][target];
         
