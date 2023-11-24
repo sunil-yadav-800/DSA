@@ -6,10 +6,10 @@ class Solution {
         int end=piles.length-1;
         while(start<end)
         {
+            end--; //Alice will choose maximum;
+            ans+=piles[end]; // i will take 2nd maximum
             end--;
-            ans+=piles[end];
-            end--;
-            start++;
+            start++; //bob will take smaller
         }
         return ans;
     }
