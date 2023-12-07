@@ -1,5 +1,9 @@
 class Solution {
     public String removeStars(String s) {
+        return Approach1(s);
+    }
+    public String Approach1(String s)
+    {
         Stack<Character> st = new Stack<Character>();
         for(int i=0;i<s.length();i++)
         {
