@@ -11,7 +11,8 @@
  */
 public class Solution {
     public boolean hasCycle(ListNode head) {
-        return Approach1(head);
+        //return Approach1(head);
+        return Approach2(head);
     }
     public boolean Approach1(ListNode head)
     {
@@ -22,6 +23,19 @@ public class Solution {
                 return true;
             set.add(head);
             head=head.next;
+        }
+        return false;
+    }
+    public boolean Approach2(ListNode head)
+    {
+        ListNode slow=head,fast=head;
+        while(fast!=null && fast.next!=null)
+        {
+            
+            slow=slow.next;
+            fast=fast.next.next;
+            if(slow == fast)
+                return true;
         }
         return false;
     }
