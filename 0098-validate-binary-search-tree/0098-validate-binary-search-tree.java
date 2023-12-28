@@ -16,7 +16,8 @@
 class Solution {
     long value = Long.MIN_VALUE;
     public boolean isValidBST(TreeNode root) {
-        return solve(root);
+        //return solve(root);
+        return Approach2(root,Long.MIN_VALUE,Long.MAX_VALUE);
     }
     public boolean solve(TreeNode root)
     {
@@ -29,5 +30,18 @@ class Solution {
         
         value = root.val;
         return solve(root.right);
+    }
+    public boolean Approach2(TreeNode root, long min, long max)
+    {
+        if(root == null)
+            return true;
+        
+        if(min>=root.val || max<=root.val)
+            return false;
+        
+        boolean left = Approach2(root.left,min,root.val);
+        boolean right = Approach2(root.right,root.val,max);
+        return left && right;
+        
     }
 }
