@@ -15,7 +15,8 @@
  */
 class Solution {
     public boolean isBalanced(TreeNode root) {
-       return Approach1(root);
+       //return Approach1(root);
+        return Approach2(root)!=-1;
     }
     public boolean Approach1(TreeNode root)
     {
@@ -32,5 +33,22 @@ class Solution {
         int lh=height(root.left);
         int rh=height(root.right);
         return 1+Math.max(lh,rh);
+    }
+    public int Approach2(TreeNode root)
+    {
+        if(root == null)
+            return 0;
+        
+        int left = Approach2(root.left);
+        if(left == -1)
+            return -1;
+        int right = Approach2(root.right);
+        if(right == -1)
+            return -1;
+        
+        if(Math.abs(left-right)>1)
+            return -1;
+        
+        return 1+Math.max(left,right);
     }
 }
