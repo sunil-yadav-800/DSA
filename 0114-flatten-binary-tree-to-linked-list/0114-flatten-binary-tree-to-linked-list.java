@@ -14,8 +14,10 @@
  * }
  */
 class Solution {
+    TreeNode prev=null;
     public void flatten(TreeNode root) {
-        Approach1(root);
+        //Approach1(root);
+        Approach2(root);
     }
     public void Approach1(TreeNode root)
     {
@@ -42,5 +44,16 @@ class Solution {
         list.add(root);
         Preorder(root.left,list);
         Preorder(root.right,list);
+    }
+    public void Approach2(TreeNode root)
+    {
+        if(root == null)
+            return;
+        
+        Approach2(root.right);
+        Approach2(root.left);
+        root.right=prev;
+        root.left=null;
+        prev=root;
     }
 }
