@@ -5,19 +5,27 @@ class Solution {
         {
             set.add(nums[i]);
         }
-        HashSet<String> ans = new HashSet<>();
+        //HashSet<String> ans = new HashSet<>();
+        List<String> ans = new ArrayList<>();
         solve(nums.length,"",ans);
+        for(int i=0;i<ans.size();i++)
+        {
+            if(!set.contains(ans.get(i)))
+                return ans.get(i);
+        }
         
+        /*
         Iterator<String> it = ans.iterator();
         while(it.hasNext()) {
             String str = it.next();
           if(!set.contains(str))
               return str;
         }
+        */
         
         return "";
     }
-    private void solve(int n, String curr, HashSet<String> ans)
+    private void solve(int n, String curr, List<String> ans)
     {
         if(n==0)
         {
