@@ -1,5 +1,6 @@
 class Solution {
     public int coinChange(int[] coins, int amount) {
+        /*
         int[][] dp = new int[coins.length+1][amount+1];
         for(int i=0;i<dp.length;i++)
         {
@@ -9,6 +10,8 @@ class Solution {
             }
         }
         int res = solve1(coins,0,amount,dp);
+        */
+        int res = solve2(coins,amount);
         if(res == Integer.MAX_VALUE)
             return -1;
         return res;
@@ -35,5 +38,36 @@ class Solution {
         }
         int notTake = solve1(arr,idx+1,amount,dp);
         return dp[idx][amount] = Math.min(take,notTake);
+    }
+    private int solve2(int[] arr, int totalAmount)
+    {
+        int[][] dp = new int[arr.length+1][totalAmount+1];
+        //fill base case
+        for(int row=0;row<dp.length;row++)
+        {
+            dp[row][0]=0;
+        }
+        for(int col=0;col<dp[0].length;col++)
+        {
+            dp[dp.length-1][col]=Integer.MAX_VALUE;
+        }
+        for(int idx = dp.length-2; idx>=0;idx--)
+        {
+            for(int amount = 1; amount<=totalAmount; amount++)
+            {
+                int take = Integer.MAX_VALUE;
+                if(amount-arr[idx]>=0)
+                {
+                   take = dp[idx][amount-arr[idx]];
+                }
+                if(take != Integer.MAX_VALUE)
+                {
+                    take+=1;
+                }
+               int notTake = dp[idx+1][amount];
+               dp[idx][amount] = Math.min(take,notTake);
+            }
+        }
+        return dp[0][totalAmount];
     }
 }
