@@ -1,32 +1,59 @@
 class Solution {
     public int numDecodings(String s) {
+        
         int[] dp = new int[s.length()+1];
         Arrays.fill(dp,-1);
-        return Solve1(s,dp);
+        return Solve1(s,0,dp);
+        
+        //return recur(s,0);
     }
-    private int Solve1(String s, int[] dp)
+    private int Solve1(String s, int idx, int[] dp)
     {
         //base case
-        if(s.length() == 0)
+        if(idx == s.length())
         {
             return 1;
         }
-        if(dp[s.length()] !=-1)
-            return dp[s.length()];
+        if(dp[idx] !=-1)
+            return dp[idx];
         int ans=0;
-        for(int i=1;i<=s.length();i++)
+        for(int i=idx+1;i<=s.length();i++)
         {
-            String str = s.substring(0,i);
+            String str = s.substring(idx,i);
             if(str.length()>2)
                 continue;
-            String next = s.substring(i);
+            
             int value = Integer.valueOf(str);
             
             if(str.charAt(0)!='0' && value<=26)
             {
-               ans+=Solve1(next,dp);
+               ans+=Solve1(s,i,dp);
             }
         }
-       return dp[s.length()] = ans;
+       return dp[idx] = ans;
+    }
+    private int recur(String s, int idx)
+    {
+        //base case
+        if(idx == s.length())
+        {
+            return 1;
+        }
+        
+        int ans=0;
+        for(int i=idx+1;i<=s.length();i++)
+        {
+            String str = s.substring(idx,i);
+            if(str.length()>2)
+                continue;
+            
+            int value = Integer.valueOf(str);
+            
+            if(str.charAt(0)!='0' && value<=26)
+            {
+               ans+=recur(s,i);
+            }
+        }
+       return ans;
     }
 }
