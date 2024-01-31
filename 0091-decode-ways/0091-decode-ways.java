@@ -1,11 +1,14 @@
 class Solution {
     public int numDecodings(String s) {
-        
+        /*
         int[] dp = new int[s.length()+1];
         Arrays.fill(dp,-1);
         return Solve1(s,0,dp);
+        */
         
         //return recur(s,0);
+        
+        return Tabulation(s);
     }
     private int Solve1(String s, int idx, int[] dp)
     {
@@ -55,5 +58,31 @@ class Solution {
             }
         }
        return ans;
+    }
+    private  int Tabulation(String s)
+    {
+        int[] dp = new int[s.length()+1];
+        //base case 
+        dp[s.length()]=1;
+
+        for(int idx = s.length()-1;idx>=0;idx--)
+        {
+            int count=0;
+            for(int i=idx+1;i<=s.length();i++)
+            {
+                String str = s.substring(idx,i);
+                if(str.length()>2)
+                {
+                    continue;
+                }
+                int value = Integer.valueOf(str);
+                if(str.charAt(0)!='0' && value<=26)
+                {
+                    count+=dp[i];
+                }
+            }
+             dp[idx] = count;
+        }
+        return dp[0];
     }
 }
