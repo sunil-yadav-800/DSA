@@ -11,7 +11,7 @@ class Solution {
         }
         return solve(prices,0,1,dp);
         */
-        return solve2(prices);
+        return Tabulation(prices);
     }
     private int solve(int[] prices, int i, int buy, int[][] dp)
     {
@@ -36,7 +36,7 @@ class Solution {
             return dp[i][buy] = Math.max(s,ns);
         }
     }
-    private int solve2(int[] prices)
+    private int Tabulation(int[] prices)
     {
         int[][] dp = new int[prices.length+2][2];
         //base case
@@ -51,14 +51,14 @@ class Solution {
             {
                 if(buy == 1)
                 {
-                    int b = -prices[i] + solve(prices,i+1,0,dp);
-                    int nb = 0+solve(prices,i+1,1,dp);
+                    int b = -prices[i] + dp[i+1][0];
+                    int nb = 0+dp[i+1][1];
                     dp[i][buy] = Math.max(b,nb);
                 }
                 else
                 {
-                    int s = prices[i] + solve(prices,i+2,1,dp);
-                    int ns = 0+solve(prices,i+1,0,dp);
+                    int s = prices[i] + dp[i+2][1];
+                    int ns = 0+dp[i+1][0];
                     dp[i][buy] = Math.max(s,ns);
                 }
             }
