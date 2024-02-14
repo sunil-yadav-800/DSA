@@ -1,5 +1,6 @@
 class Solution {
     public int findMaxForm(String[] strs, int m, int n) {
+        /*
         int[][][] dp = new int[strs.length+1][m+1][n+1];
         for(int i=0;i<strs.length+1;i++)
         {
@@ -12,6 +13,8 @@ class Solution {
             }
         }
         return solve(strs,0,0,0,m,n,dp);
+        */
+        return solve2(strs,m,n);
     }
     private int solve(String[] strs, int idx, int zeros, int ones, int m, int n, int[][][] dp)
     {
@@ -38,6 +41,32 @@ class Solution {
         
         return dp[idx][zeros][ones] = Math.max(take,notTake);
         
+    }
+    private int solve2(String[] strs, int m, int n)
+    {
+        int[][][] dp = new int[strs.length+1][m+1][n+1];
+        //base case already filled
+        
+        for(int idx=strs.length-1;idx>=0;idx--)
+        {
+            for(int zeros=m;zeros>=0;zeros--)
+            {
+                for(int ones=n;ones>=0;ones--)
+                {
+                    int[] arr = count(strs[idx]);
+                    int take = 0;
+                    if(arr[0]+zeros<=m && arr[1]+ones<=n)
+                    {
+                        take = 1+dp[idx+1][zeros+arr[0]][ones+arr[1]]; 
+                    }
+
+                    int notTake = dp[idx+1][zeros][ones];
+
+                    dp[idx][zeros][ones] = Math.max(take,notTake);
+                }
+            }
+        }
+        return dp[0][0][0];
     }
     private int[] count(String str)
     {
