@@ -1,6 +1,6 @@
 class Solution {
     public boolean canPartition(int[] nums) {
-        /*
+        
         int sum=0;
         for(int num: nums)
         {
@@ -11,12 +11,19 @@ class Solution {
             return false;
         }
         int target=sum/2;
-        boolean[][] dp = new boolean[nums.length][target+1];
+        int[][] dp = new int[nums.length][target+1];
+        for(int i=0;i<dp.length;i++)
+        {
+            for(int j=0;j<dp[0].length;j++)
+            {
+                dp[i][j]=-1;
+            }
+        }
         return solve1(nums,nums.length-1,target,dp);
-        */
-        return solve2(nums);
+        
+        //return solve2(nums);
     }
-    private boolean solve1(int[] arr, int idx, int target, boolean[][] dp)
+    private boolean solve1(int[] arr, int idx, int target, int[][] dp)
     {
         //base case
         if(target == 0)
@@ -29,9 +36,9 @@ class Solution {
                 return true;
             return false;
         }
-        if(dp[idx][target]!=false)
+        if(dp[idx][target]!=-1)
         {
-            return true;
+            return dp[idx][target]==1?true:false;
         }
         boolean take = false;
         if(target-arr[idx]>=0)
@@ -39,7 +46,8 @@ class Solution {
             take = solve1(arr,idx-1,target-arr[idx],dp);
         }
         boolean notTake = solve1(arr,idx-1,target,dp);
-        return dp[idx][target] = (take || notTake);
+        dp[idx][target] = (take || notTake)==true?1:0;
+        return  (take || notTake);
     }
     private boolean solve2(int[] nums)
     {
