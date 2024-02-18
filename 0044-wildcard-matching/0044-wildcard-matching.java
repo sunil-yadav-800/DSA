@@ -1,6 +1,53 @@
 class Solution {
     public boolean isMatch(String s, String p) {
-        return solve2(s,p);
+        //return solve2(s,p);
+        int[][] dp = new int[p.length()][s.length()];
+        for(int i=0;i<dp.length;i++)
+        {
+            for(int j=0;j<dp[0].length;j++)
+            {
+                dp[i][j]=-1;
+            }
+        }
+        return solve(p,s,p.length()-1,s.length()-1,dp);
+    }
+    private boolean solve(String p, String s, int i, int j, int[][] dp)
+    {
+        if(i<0 && j<0)
+            return true;
+        if(j<0)
+        {
+            for(int k=0;k<=i;k++)
+            {
+                if(p.charAt(k)!='*')
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        if(i<0)
+            return false;
+        
+        if(dp[i][j]!=-1)
+        {
+            return dp[i][j]==1?true:false;
+        }
+        boolean result=false;
+        if(p.charAt(i)=='*')
+        {
+            result = solve(p,s,i-1,j,dp) || solve(p,s,i,j-1,dp);
+        }
+        else if(p.charAt(i) == s.charAt(j) || p.charAt(i)=='?')
+        {
+            result = solve(p,s,i-1,j-1,dp);
+        }
+        else
+        {
+            result = false;
+        }
+        dp[i][j] = result==true?1:0;
+        return result;
     }
     public boolean solve2(String s, String p)
     {
