@@ -26,35 +26,20 @@ class Solution {
         }
         //right
         boolean right=false;
-        if(board[row][col] == word.charAt(index))
-        {
-            visited[row][col]=true;
-            right  = Solve(board,row,col+1,word,index+1,visited);
-            visited[row][col]=false;
-        }
         //down
         boolean down=false;
-        if(board[row][col] == word.charAt(index))
-        {
-           visited[row][col]=true;
-           down = Solve(board,row+1,col,word,index+1,visited);
-           visited[row][col]=false;
-        }
         //left
         boolean left = false;
-        if(board[row][col] == word.charAt(index))
-        {
-           visited[row][col]=true;
-           left = Solve(board,row,col-1,word,index+1,visited);
-           visited[row][col]=false;
-        }
         //up
         boolean up=false;
         if(board[row][col] == word.charAt(index))
         {
-           visited[row][col]=true;
-           up = Solve(board,row-1,col,word,index+1,visited);
-           visited[row][col]=false;
+            visited[row][col]=true;
+            right  = Solve(board,row,col+1,word,index+1,visited);
+            down = Solve(board,row+1,col,word,index+1,visited);
+            left = Solve(board,row,col-1,word,index+1,visited);
+            up = Solve(board,row-1,col,word,index+1,visited);
+            visited[row][col]=false;
         }
         return (right || down || left || up);
     }
