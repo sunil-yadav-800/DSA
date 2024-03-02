@@ -22,7 +22,7 @@ class Solution {
             return 0;
         
         Queue<Pair> q = new LinkedList<>();
-        q.add(new Pair(beginWord,0));
+        q.add(new Pair(beginWord,1));
         if(set.contains(beginWord))
         {
             set.remove(beginWord);
@@ -36,7 +36,7 @@ class Solution {
             
             if(word.equals(endWord))
             {
-                return step+1;
+                return step;
             }
             
             for(int i=0;i<word.length();i++)
