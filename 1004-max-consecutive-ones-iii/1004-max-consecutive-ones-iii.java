@@ -5,20 +5,16 @@ class Solution {
         int ans=-1;
         while(j<nums.length)
         {
-            if(flip == k && nums[j]==0)
-            {
-                while(i<=j && flip == k)
-                {
-                    if(nums[i]==0)
-                    {
-                        flip--;
-                    }
-                    i++;
-                }
-            }
             if(nums[j]==0)
             {
                 flip++;
+            }
+            while(flip>k)
+            {
+                if(nums[i]==0)
+                    flip--;
+                
+                i++;
             }
             ans=Math.max(ans,j-i+1);
             j++;
