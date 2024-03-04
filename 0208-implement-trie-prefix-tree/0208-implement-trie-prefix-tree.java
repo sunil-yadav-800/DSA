@@ -1,68 +1,56 @@
-class Node{
-    Node[] links = new Node[26];
-    boolean flag=false;
-    public Node(){
-        
-    }
-    public boolean containsKey(char ch)
+class TrieNode{
+    TrieNode[] children;
+    boolean isWord;
+    public TrieNode()
     {
-        return links[ch-'a']!=null;
+        children = new TrieNode[26];
+        isWord = false;
     }
-    public void put(char ch, Node node)
-    {
-        links[ch-'a']=node;
-    }
-    public Node get(char ch)
-    {
-        return links[ch-'a'];
-    }
-    public void setEnd(){
-        flag=true;
-    }
-    public boolean getEnd()
-    {
-        return flag;
-    }
-    
 }
 class Trie {
-    Node root;
+    TrieNode root;
     public Trie() {
-        root = new Node();
+        root = new TrieNode();
     }
     
     public void insert(String word) {
-        Node node = root;
-        for(int i=0;i<word.length();i++)
+        TrieNode curr = root;
+        for(char c: word.toCharArray())
         {
-            if(!node.containsKey(word.charAt(i))) // node.links[word.charAt(i)-'a']!=null
+            int index = c-'a';
+            if(curr.children[index] == null)
             {
-                node.put(word.charAt(i), new Node());
-                // node.links[word.charAt(i)-'a']=new node()
+                curr.children[index] = new TrieNode();
             }
-            node = node.get(word.charAt(i));//node = node.links[word.charAt(i)-'a']
+            curr = curr.children[index];
         }
-        node.setEnd(); //to indicate that we contains this word
+        curr.isWord = true;
     }
     
     public boolean search(String word) {
-        Node node = root;
-        for(int i=0;i<word.length();i++)
+        TrieNode curr = root;
+        for(char c: word.toCharArray())
         {
-            if(!node.containsKey(word.charAt(i)))
+            int index = c-'a';
+            if(curr.children[index] == null)
+            {
                 return false;
-            node = node.get(word.charAt(i));
+            }
+            curr = curr.children[index];
         }
-        return node.getEnd();
+        return curr.isWord;
     }
     
     public boolean startsWith(String prefix) {
-        Node node = root;
-        for(int i=0;i<prefix.length();i++)
+        TrieNode curr = root;
+        for(char c: prefix.toCharArray())
         {
-            if(!node.containsKey(prefix.charAt(i)))
+            int index = c-'a';
+            if(curr.children[index] == null)
+            {
                 return false;
-            node = node.get(prefix.charAt(i));
+            }
+            curr = curr.children[index];
         }
         return true;
     }
