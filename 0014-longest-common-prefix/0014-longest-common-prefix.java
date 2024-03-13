@@ -22,10 +22,9 @@ class Trie{
             {
                 node.children[ch-'a'] = new TrieNode();
             }
-            node.count++;
             node = node.children[ch-'a'];
+            node.count++;
         }
-        node.count++;
     }
 }
 class Solution {
