@@ -1,27 +1,58 @@
-class Solution {
-    public String longestCommonPrefix(String[] strs) {
-        if(strs.length==1)
-            return strs[0];
-        String ans = strs[0];
-        for(int i=1;i<strs.length;i++)
+class TrieNode{
+    TrieNode[] children;
+    int count;
+    public TrieNode()
+    {
+        children = new TrieNode[26];
+        count=0;
+    }
+}
+class Trie{
+    TrieNode root;
+    public Trie()
+    {
+        root = new TrieNode();
+    }
+    public void insert(String word)
+    {
+        TrieNode node = root;
+        for(char ch: word.toCharArray())
         {
-            String matchedSubstring = findMatch(ans,strs[i]);
-            if(matchedSubstring == "")
-                return "";
-            ans = matchedSubstring;
+            if(node.children[ch-'a']==null)
+            {
+                node.children[ch-'a'] = new TrieNode();
+            }
+            node.count++;
+            node = node.children[ch-'a'];
         }
+        node.count++;
+    }
+}
+class Solution {
+    String ans = "";
+    public String longestCommonPrefix(String[] strs) {
+        if(strs.length == 1)
+            return strs[0];
+        Trie trie = new Trie();
+        for(String word: strs)
+        {
+            trie.insert(word);
+        }
+        dfs(trie.root,strs.length,"");
         return ans;
     }
-    public String findMatch(String s1, String s2)
+    private void dfs(TrieNode node, int len, String curr)
     {
-        String ans = "";
-        int i=0,j=0;
-        while(i<s1.length() && j<s2.length() && s1.charAt(i)==s2.charAt(j))
+        if(curr.length()>ans.length())
         {
-            ans+=s1.charAt(i);
-            i++;
-            j++;
+            ans=curr;
         }
-        return ans;
+        for(int i=0;i<26;i++)
+        {
+            if(node.children[i]!=null && node.children[i].count == len)
+            {
+                dfs(node.children[i],len,curr+(char)(i+'a'));
+            }
+        }
     }
 }
