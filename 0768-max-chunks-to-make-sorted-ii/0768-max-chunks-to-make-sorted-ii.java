@@ -1,7 +1,8 @@
 class Solution {
     public int maxChunksToSorted(int[] arr) {
-        //return Approach1(arr);
-        return Approach2(arr);
+        //return Approach2(arr);
+        
+        return Approach1(arr);
     }
     public int Approach1(int[] arr)
     {
